@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_400sdp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/txt"
+        android:text="خانواده مربوطه را انتخاب نمایید"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        android:layout_height="@dimen/_48sdp"
+        />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt"
+        android:id="@+id/ll"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="خانواده"
+            android:textColor="@color/colorsecondarytext"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="bold" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_below="@+id/txt_shop"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:background="@drawable/spiner_background"
+            android:layoutDirection="rtl"
+            android:padding="@dimen/_3sdp">
+
+            <Spinner
+                android:id="@+id/spinnerChooseFamily"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <requestFocus />
+            </Spinner>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp">
+
+        <Button
+            android:id="@+id/btRegisterChooseFamily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@drawable/bg_button"
+            android:foreground="?selectableItemBackground"
+            android:text="ثبت"
+            android:textColor="#fff"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/pbRegisterChooseFamily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/bg_button"
+            android:indeterminateTint="#fff"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

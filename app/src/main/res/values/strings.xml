@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">SKU_Scanner</string>
+    <string name="askInternetConnection">لطفا اینترنت خود را متصل نمایید</string>
+    <string name="mobileNumber">شماره موبایل</string>
+    <string name="password">کلمه عبور</string>
+    <string name="enter">ورود</string>
+    <string name="enterEmail">ایمیل خود را وارد کنید</string>
+
+    <string name="connectionFaield">خطا در برقراری ارتباط</string>
+    <string name="serverFaield">خطا در اطلاعات دریافتی از سرور</string>
+    <string name="register">ثبت</string>
+    <string name="scanner">اسکنر</string>
+    <string name="pleaseTypeBarcode">لطفا بارکد را تایپ نمایید</string>
+    <string name="product_register"> ادامه ثبت محصول</string>
+    <string name="barcode_register">ثبت بارکد</string>
+    <string name="enterBarcode">بارکد را وارد نمایید</string>
+    <string name="warning">اخطار</string>
+    <string name="no_internet_text">برای استفاده از برنامه از اتصال به اینترنت مطمئن شوید و دوباره امتحان کنید</string>
+    <string name="internet_setting">تنظیمات wifi</string>
+    <string name="data_setting">تنظیمات دیتا</string>
+    <string name="top_view">نمای بالا</string>
+    <string name="barcode_view">بارکد</string>
+    <string name="price">قیمت</string>
+    <string name="main_view">نمای اصلی</string>
+    <string name="action_reset">ریست</string>
+    <string name="sure_to_reset">آیا مطمین هستید که برنامه ریست شود؟</string>
+    <string name="cancel">انصراف</string>
+</resources>
