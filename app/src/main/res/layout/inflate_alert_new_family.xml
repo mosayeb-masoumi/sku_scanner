@@ -10,7 +10,7 @@
         android:layout_height="@dimen/_48sdp"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:text="خانواده مربوطه را انتخاب نمایید"
+        android:text="ثبت خانواده جدید"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp" />
 
@@ -78,7 +78,7 @@
     <!--android:textDirection="rtl"-->
     <!--android:textSize="14sp" />-->
     <EditText
-        android:id="@+id/edtExplain_inflate_new_family"
+        android:id="@+id/edtDesc_inflate_new_family"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_150sdp"
         android:layout_below="@+id/txt2"

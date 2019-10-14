@@ -44,18 +44,17 @@ public class Model implements Contract.Model {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.code()==200){
-                    Toast.makeText(context, "200", Toast.LENGTH_SHORT).show();
-                    context.startActivity(new Intent(context,ScanActivity.class));
-                    Toast.makeText(context, "با موفقیت ثبت شد", Toast.LENGTH_SHORT).show();
+
+                    presenter.sendDataResult(1);
 
                 }else{
-                    Toast.makeText(context, "server error", Toast.LENGTH_SHORT).show();
+                    presenter.sendDataResult(-4);
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(context, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                presenter.sendDataResult(-5);
             }
         });
     }

@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -28,12 +29,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sku_scanner.R;
+import com.example.sku_scanner.activities.qrcode.ScanActivity;
 import com.example.sku_scanner.activities.splash.SplashActivity;
 import com.example.sku_scanner.helpers.App;
 import com.example.sku_scanner.helpers.Cache;
 import com.example.sku_scanner.helpers.DialogFactory;
 import com.example.sku_scanner.helpers.GeneralTools;
 import com.example.sku_scanner.helpers.PersianAppcompatActivity;
+import com.example.sku_scanner.models.city.CityList;
+import com.example.sku_scanner.models.province.ProvinceList;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +71,8 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     @BindView(R.id.pb_family)
     ProgressBar pbFamily;
 
-    String idSpnShop, strShopSpn;
-    String idSpnFamily, strProductSpn;
+    String idSpnShop, strShopSpn="";
+    String idSpnFamily, strProductSpn="";
     @BindView(R.id.pb_chooseshop)
     ProgressBar pbChooseshop;
     @BindView(R.id.rl_root)
@@ -90,8 +95,11 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     @BindView(R.id.ll2)
     LinearLayout ll2;
 
+    Button btn_register_category;
+    ProgressBar pb_register_category;
 
-//    EditText edtQR;
+    Dialog newShopDialog, newCategoryDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,12 +124,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
             }
 
         };
-//        edtQR=findViewById(R.id.edtQRcode);
 
-
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(true);
-//        toolbar.setTitle("داشبورد");
 
         txtToolbarMain.setText(App.loginResult.result.getEmail());
 //        presenter.loadView();
@@ -131,7 +134,8 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
             inflateNewCategory();
         });
         btnNewShop.setOnClickListener(v -> {
-            presenter.btnNewShopPressed();
+            //for inflating newShop dialog
+            presenter.requestProvinceData();
         });
         btnFamily.setOnClickListener(v -> {
             inflateChooseFamily();
@@ -148,17 +152,151 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     }
 
 
+    @Override
+    public void setNewShopDialog(ProvinceList provincelist) {
+        newShopDialog = new Dialog(context);
+        newShopDialog.setContentView(R.layout.inflate_alert_new_shop);
+
+        EditText edtShopName = newShopDialog.findViewById(R.id.edtShopName);
+        EditText edtShopAddress = newShopDialog.findViewById(R.id.edtShopAddress);
+        EditText edtShopTel = newShopDialog.findViewById(R.id.edtShopTel);
+        Spinner spinnerProvince = newShopDialog.findViewById(R.id.spinnerProvince);
+        Spinner spinnercity = newShopDialog.findViewById(R.id.spinnercity);
+        Spinner spinnerArea = newShopDialog.findViewById(R.id.spinnerArea);
+        Button btnRegister = newShopDialog.findViewById(R.id.btRegister_newShop);
+        ProgressBar pbRegister = newShopDialog.findViewById(R.id.pbRegister__newShop);
+        AVLoadingIndicatorView avi = newShopDialog.findViewById(R.id.avi);
+
+        List<String> provinceList = new ArrayList<>();
+        for (int i = 0; i < provincelist.data.size(); i++) {
+            provinceList.add(provincelist.data.get(i).getProvince());
+        }
+
+        String[] spinnerAreaData = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+        ArrayAdapter<String> spnAreaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerAreaData);
+        spnAreaAdapter.setDropDownViewResource(android.R.layout.simple_list_item_activated_1);
+        spinnerArea.setAdapter(spnAreaAdapter);
+
+        ArrayAdapter<String> spnProvinceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, provinceList);
+        spnProvinceAdapter.setDropDownViewResource(android.R.layout.simple_list_item_activated_1);
+        spinnerProvince.setAdapter(spnProvinceAdapter);
+
+
+        spinnerProvince.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                avi.show();
+
+                int positionProvince = spinnerProvince.getSelectedItemPosition();
+                presenter.requestDataSpnCity(spinnercity, positionProvince, provincelist, avi);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRegister.setVisibility(View.GONE);
+                pbRegister.setVisibility(View.VISIBLE);
+                if (!edtShopName.getText().toString().equals("") && !edtShopAddress.getText().toString().equals("") &&
+                        !edtShopTel.getText().toString().equals("") && (spinnerProvince.getSelectedItem().toString() != "")
+                        && (spinnercity.getSelectedItem().toString() != "") && (spinnerArea.getSelectedItem().toString() != "")) {
+
+                    btnRegister.setVisibility(View.GONE);
+                    pbRegister.setVisibility(View.VISIBLE);
+                    presenter.btNewShopClicked(edtShopName.getText().toString(), edtShopAddress.getText().toString()
+                            , edtShopTel.getText().toString(), spinnerProvince.getSelectedItemPosition(),
+                            spinnercity.getSelectedItemPosition(), spinnerArea.getSelectedItemPosition(), btnRegister, pbRegister, newShopDialog);
+                } else {
+                    Toast.makeText(context, "لطفا فیلد ها را پر نمایید", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+        newShopDialog.show();
+
+    }
+
+    @Override
+    public void setSpinerCity(CityList cityList, Spinner spinnercity, AVLoadingIndicatorView avi) {
+
+        avi.hide();
+        List<String> cityLists = new ArrayList<>();
+        for (int i = 0; i < cityList.data.size(); i++) {
+            cityLists.add(cityList.data.get(i).getCity());
+        }
+
+        ArrayAdapter<String> spnCityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cityLists);
+        spnCityAdapter.setDropDownViewResource(android.R.layout.simple_list_item_activated_1);
+        spinnercity.setAdapter(spnCityAdapter);
+
+
+    }
+
+    @Override
+    public void showBtnRegisterNewShop(Button btnRegister, ProgressBar pbRegister, boolean b, Dialog newShopDialog, String edtShopName) {
+        btnRegister.setVisibility(View.VISIBLE);
+        pbRegister.setVisibility(View.GONE);
+        newShopDialog.dismiss();
+//        strShopSpn = edtShopName;
+        Cache.setString("strShop",edtShopName);
+        chooseShop = true;
+        if (b) {
+            checkVisibilityBtnRgsBarcode();
+        }
+
+
+    }
+
+    @Override
+    public void newFamilyRegistered(Dialog newCategoryDialog, String title) {
+        newCategoryDialog.dismiss();
+        chooseFamily = true;
+//        strProductSpn = title;
+        Cache.setString("strCategory",title);
+        checkVisibilityBtnRgsBarcode();
+    }
+
+
     public void inflateChooseFamily() {
         presenter.requestCategoryList();
     }
 
 
     private void inflateNewCategory() {
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.inflate_alert_new_family);
+        newCategoryDialog = new Dialog(context);
+        newCategoryDialog.setContentView(R.layout.inflate_alert_new_family);
+
+        EditText edtTitle = newCategoryDialog.findViewById(R.id.edtTitle_inflate_new_family);
+        EditText edtDesctiption = newCategoryDialog.findViewById(R.id.edtDesc_inflate_new_family);
+        btn_register_category = newCategoryDialog.findViewById(R.id.btRegisterChooseFamily);
+        pb_register_category = newCategoryDialog.findViewById(R.id.pbRegisterChooseFamily);
 
 
-        dialog.show();
+        btn_register_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = edtTitle.getText().toString();
+                String description = edtDesctiption.getText().toString();
+                if (title.equals("") || description.equals("")) {
+                    Toast.makeText(context, "لطفا فیلدها را پر نمایید", Toast.LENGTH_SHORT).show();
+                } else {
+                    presenter.registerNewCategory(title, description, newCategoryDialog);
+                }
+
+
+            }
+        });
+
+        newCategoryDialog.show();
     }
 
 
@@ -216,6 +354,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                 idSpnFamily = App.categoryList.data.get(spnFamilyPosition).getId();
                 App.idSpnFamily = idSpnFamily;
                 strProductSpn = spnFamily.getSelectedItem().toString();
+                Cache.setString("strCategory",strProductSpn);
             }
 
             @Override
@@ -264,6 +403,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                 idSpnShop = App.shopList.data.get(spnShopPosition).getId();
                 App.idSpnShop = idSpnShop;
                 strShopSpn = spnShop.getSelectedItem().toString();
+                Cache.setString("strShop",strShopSpn);
 
             }
 
@@ -286,8 +426,10 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
         if (chooseShop && chooseFamily) {
             btnRegisterBarCode.setVisibility(View.VISIBLE);
             llInfo.setVisibility(View.VISIBLE);
-            txtChooseShop.setText("انتخاب فروشگاه :" + " " + strShopSpn);
-            txtChooseProduct.setText("خانواده محصول :" + " " + strProductSpn);
+//            txtChooseShop.setText("انتخاب فروشگاه :" + " " + strShopSpn);
+////            txtChooseProduct.setText("خانواده محصول :" + " " + strProductSpn);
+            txtChooseShop.setText("انتخاب فروشگاه :" + " " + Cache.getString("strShop"));
+            txtChooseProduct.setText("خانواده محصول :" + " " + Cache.getString("strCategory"));
         } else {
             btnRegisterBarCode.setVisibility(View.GONE);
             llInfo.setVisibility(View.GONE);
@@ -304,6 +446,25 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     public void showBtnChooseshop() {
         btnShop.setVisibility(View.VISIBLE);
         pbChooseshop.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideBtnRegisterNewCategory() {
+        btn_register_category.setVisibility(View.GONE);
+        pb_register_category.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showBtnRegisterNewCategory() {
+        btn_register_category.setVisibility(View.VISIBLE);
+        pb_register_category.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setSpinnerArea(String[] spinnerAreaData) {
+//        ArrayAdapter<String> spinnerAreaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerAreaData);
+//        spinnerAreaAdapter.setDropDownViewResource(android.R.layout.simple_list_item_activated_1);
+//        spinnerArea.setAdapter(spinnerAreaAdapter);
     }
 
 
@@ -327,6 +488,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
             case 1:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                    startActivity(new Intent(MainActivity.this, ScanActivity.class));
                 } else {
                     Toast.makeText(this, "نیاز به اجازه ی دسترسی دوربین", Toast.LENGTH_SHORT).show();
                 }
@@ -380,7 +542,21 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     protected void onResume() {
         super.onResume();
         registerReceiver(connectivityReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        btnRegisterBarCode.setVisibility(View.GONE);
+//        if(!strShopSpn.equals("") && !strProductSpn.equals("")){
+
+        String strShop=Cache.getString("strShop");
+        String strCategory = Cache.getString("strCategory");
+        if(!strShop.equals("") && !strCategory.equals("")){
+            btnRegisterBarCode.setVisibility(View.VISIBLE);
+            llInfo.setVisibility(View.VISIBLE);
+
+            txtChooseShop.setText("انتخاب فروشگاه :" + " " + Cache.getString("strShop"));
+            txtChooseProduct.setText("خانواده محصول :" + " " + Cache.getString("strCategory"));
+
+        }else{
+            btnRegisterBarCode.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

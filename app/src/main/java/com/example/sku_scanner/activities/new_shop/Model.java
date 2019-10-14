@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.example.sku_scanner.helpers.App;
+import com.example.sku_scanner.helpers.GpsTracker;
 import com.example.sku_scanner.models.category.CategoryList;
 import com.example.sku_scanner.models.city.CityList;
 import com.example.sku_scanner.models.city.CitySendData;
@@ -21,6 +22,8 @@ public class Model implements Contract.Model {
 
     private Contract.Presenter presenter;
     private Context context;
+    private GpsTracker gpsTracker;
+    String strLat,strLng;
 
     @Override
     public void attachPresenter(Contract.Presenter presenter , Context context) {
@@ -65,9 +68,6 @@ public class Model implements Contract.Model {
         CitySendData citySendData = new CitySendData();
         citySendData.setId(App.provinceList.data.get(position).id);
 
-//        APIService apiService = APIClient.getClient().create(APIService.class);
-//        Call<CityList> call = apiService.getCityList(citySendData);
-
         Service service = new ServiceProvider(context).getmService();
         Call<CityList> call = service.getCityList(citySendData);
 
@@ -97,13 +97,15 @@ public class Model implements Contract.Model {
                                          int provinceItemPosition, int cityItemPosition, int areaItemPosition) {
 
 
+        getLocation();
         RegisterShopSendData registerShopSendData = new RegisterShopSendData();
 
         registerShopSendData.name = shopName;
         registerShopSendData.address = shopAddress;
         registerShopSendData.tel = shopTel;
-        // TODO: 7/23/2019  send lat lng
-        registerShopSendData.lat = "10";
+
+        registerShopSendData.lat = strLat;
+        registerShopSendData.lng = strLng;
 //        registerShopSendData.city_id = String.valueOf(App.cityList.data.get(cityItemPosition).id);
         registerShopSendData.city_id = String.valueOf(App.cityList.data.get(cityItemPosition).getId());
         registerShopSendData.region = String.valueOf(areaItemPosition);
@@ -120,6 +122,8 @@ public class Model implements Contract.Model {
             @Override
             public void onResponse(Call<RegisterShop> call, Response<RegisterShop> response) {
                 if(response.code()==200){
+
+                    App.idSpnShop = response.body().getId();
                     presenter.registerNewShopResult(1);
                 }else{
                     presenter.registerNewShopResult(-4);
@@ -133,5 +137,17 @@ public class Model implements Contract.Model {
             }
         });
 
+    }
+
+    public void getLocation(){
+        gpsTracker = new GpsTracker(context);
+        if(gpsTracker.canGetLocation()){
+            double latitude = gpsTracker.getLatitude();
+            double longitude = gpsTracker.getLongitude();
+            strLat = (String.valueOf(latitude));
+            strLng = (String.valueOf(longitude));
+        }else{
+            gpsTracker.showSettingsAlert();
+        }
     }
 }

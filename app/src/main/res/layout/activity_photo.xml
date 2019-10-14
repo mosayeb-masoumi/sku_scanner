@@ -88,6 +88,18 @@
     </LinearLayout>
 
 
+    <!--<Button-->
+        <!--android:id="@+id/btnAdd"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_above="@+id/rlButtons"-->
+        <!--android:background="@drawable/bg_button"-->
+        <!--android:foreground="?selectableItemBackground"-->
+        <!--android:text="Add"-->
+        <!--android:textColor="#fff"-->
+        <!--android:textSize="@dimen/_15ssp"-->
+        <!--android:textStyle="bold" />-->
+
 
     <RelativeLayout
         android:id="@+id/rlButtons"

@@ -8,6 +8,8 @@ import com.example.sku_scanner.models.city.CitySendData;
 import com.example.sku_scanner.models.login.LoginResult;
 import com.example.sku_scanner.models.login.LoginSendData;
 import com.example.sku_scanner.models.province.ProvinceList;
+import com.example.sku_scanner.models.register_category.RegisterCategory;
+import com.example.sku_scanner.models.register_category.RegisterCategorySendData;
 import com.example.sku_scanner.models.register_shop.RegisterShop;
 import com.example.sku_scanner.models.register_shop.RegisterShopSendData;
 import com.example.sku_scanner.models.scan.ScanSendData;
@@ -57,6 +59,13 @@ public interface Service {
     @Headers({"Authorization: Bearer user1@sku.com"})
     @POST("Scan/Create")                                                              ////////////////////////////////////////
     Call<Boolean> sendScanData(@Body ScanSendData scanSendData);
+
+
+
+    @Headers({"Authorization: Bearer user1@sku.com"})
+    @POST("Category/Create")
+    Call<RegisterCategory> getRegisterCategory(@Body RegisterCategorySendData registerCategorySendData);
+
 
 
 

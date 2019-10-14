@@ -7,6 +7,8 @@ public interface Contract {
     interface View{
 
         void hideBtn();
+
+        void showBtn();
     }
 
     interface Presenter {
@@ -14,6 +16,8 @@ public interface Contract {
         void attachView (Context context,View view);
 
         void sendData(String strScanResult, String strBm1);
+
+        void sendDataResult(int result);
     }
 
     interface Model{

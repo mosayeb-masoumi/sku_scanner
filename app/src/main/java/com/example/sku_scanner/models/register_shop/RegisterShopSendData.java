@@ -5,6 +5,7 @@ public class RegisterShopSendData {
     public String address;
     public String tel;
     public String lat;
+    public String lng;
     public String city_id;
     public String region ;
 

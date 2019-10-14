@@ -76,9 +76,9 @@ public class Presenter implements Contract.Presenter {
 
     @Override
     public void registerNewShopResult(int result) {
+        view.hidePb();
+        view.showBtn();
         if(result == 1){
-            view.hidePb();
-            view.showBtn();
             context.startActivity(new Intent(context, MainActivity.class));
             Toast.makeText(context, "فروشگاه جدید با موفقیت ثبت شد", Toast.LENGTH_SHORT).show();
         }else if(result==-4){
