@@ -553,6 +553,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
             txtChooseShop.setText("انتخاب فروشگاه :" + " " + Cache.getString("strShop"));
             txtChooseProduct.setText("خانواده محصول :" + " " + Cache.getString("strCategory"));
 
+
         }else{
             btnRegisterBarCode.setVisibility(View.GONE);
         }
