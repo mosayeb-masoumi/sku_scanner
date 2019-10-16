@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.photo.PhotoActivity"></activity>
+        <activity android:name=".activities.TestClass"></activity>
+        <activity android:name=".activities.photo.PhotoActivity" />
         <activity android:name=".activities.qrcode.ScanActivity" />
         <activity android:name=".activities.qrcode.QRCodeActivity" />
         <activity android:name=".activities.new_shop.NewShopActivity" />

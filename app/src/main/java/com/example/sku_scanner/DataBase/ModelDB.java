@@ -24,13 +24,13 @@ public class ModelDB {
     private String image;
 
 
-    public ModelDB(String shop_id, String category_id, String barcode, String image) {
-        this.id = id;
-        this.shop_id = shop_id;
-        this.category_id = category_id;
-        this.barcode = barcode;
-        this.image = image;
-    }
+//    public ModelDB(String shop_id, String category_id, String barcode, String image) {
+//        this.id = id;
+//        this.shop_id = shop_id;
+//        this.category_id = category_id;
+//        this.barcode = barcode;
+//        this.image = image;
+//    }
 
     public ModelDB() {
 

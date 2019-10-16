@@ -3,6 +3,7 @@ package com.example.sku_scanner.activities.splash;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.widget.Toast;
 
 import com.example.sku_scanner.activities.main.MainActivity;
 import com.example.sku_scanner.helpers.App;
@@ -48,6 +49,7 @@ public class Model implements Contract.Model {
         call.enqueue(new Callback<LoginResult>() {
             @Override
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+
                 if (response.code() == 200) {
 //                    presenter.loginResult(1);
                     App.loginResult = response.body();
@@ -66,41 +68,13 @@ public class Model implements Contract.Model {
 
             @Override
             public void onFailure(Call<LoginResult> call, Throwable t) {
-
+                Toast.makeText(context, "" + t.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                String error1 = "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path $";
+                if (t.getMessage().toString().equals(error1))
+                    Toaster.shorter("The selected email is invalid.");
+//                presenter.loginResult(-5);
             }
         });
-
-//        Service apiService = ServiceProvider.getClient().create(Service.class);
-//        Call<LoginResult> call = apiService.getLogin(senddata);
-//        call.enqueue(new Callback<LoginResult>() {
-//            @Override
-//            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
-//
-//                if (response.code() == 200) {
-////                    presenter.loginResult(1);
-//                    App.loginResult = response.body();
-//                    context.startActivity(new Intent(context, MainActivity.class));
-////                    presenter.saveEmailPassword(response.body().result.email ,response.body().result.password);
-//
-//                } else {
-//
-//                    if (response.code() == 403) {
-//                        Toaster.shorter("رمز صحیح نمی باشد");
-//                    } else {
-//                        Toaster.shorter("خطا در ارتباط با سرور");
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<LoginResult> call, Throwable t) {
-//                Toast.makeText(context, "" + t.getMessage().toString(), Toast.LENGTH_SHORT).show();
-//                String error1 = "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path $";
-//                if (t.getMessage().toString().equals(error1))
-//                    Toaster.shorter("The selected email is invalid.");
-////                presenter.loginResult(-5);
-//            }
-//        });
 
 
     }

@@ -48,11 +48,10 @@ public class Model implements Contract.Model {
     @Override
     public void requestShopList() {
 
-//        APIService apiService = APIClient.getClient().create(APIService.class);
-//        Call<ShopList> call = apiService.getShoplist("Bearer "+App.loginResult.result.getEmail());
 
         Service service = new ServiceProvider(context).getmService();
-        Call<ShopList> call = service.getShoplist("Bearer "+App.loginResult.result.getEmail());
+//        Call<ShopList> call = service.getShoplist("Bearer "+App.loginResult.result.getEmail());
+        Call<ShopList> call = service.getShoplist();
 
 //        Call<ShopList> call = apiService.getShoplist();
         call.enqueue(new Callback<ShopList>() {
@@ -130,8 +129,9 @@ public class Model implements Contract.Model {
             public void onResponse(Call<RegisterCategory> call, Response<RegisterCategory> response) {
                 if(response.code()==200){
 
-                    String a = response.body().getId();
+                    String strIdFamily = response.body().getId();
                     App.idSpnFamily = response.body().getId();
+                    Cache.setString("idFamily",strIdFamily);
                     presenter.newFamilyResult(1,newCategoryDialog,title);
                     Cache.setString("strCategoty",title);
                 }else{
@@ -237,6 +237,8 @@ public class Model implements Contract.Model {
                 if(response.code()==200){
 
                     App.idSpnShop = response.body().getId();
+                    String strIdShop = response.body().getId();
+                    Cache.setString("idShop",strIdShop);
                     presenter.showBtnRegisterNewShop(btnRegister,pbRegister,newShopDialog,edtShopName);
                     Cache.setString("strShop",edtShopName);
 

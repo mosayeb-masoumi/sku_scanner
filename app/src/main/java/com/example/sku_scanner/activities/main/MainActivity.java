@@ -126,6 +126,9 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
         };
 
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        toolbar.setTitle("داشبورد");
         txtToolbarMain.setText(App.loginResult.result.getEmail());
 //        presenter.loadView();
 
@@ -210,6 +213,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 
                     btnRegister.setVisibility(View.GONE);
                     pbRegister.setVisibility(View.VISIBLE);
+                    Cache.setBoolean("chooseShop",true);
                     presenter.btNewShopClicked(edtShopName.getText().toString(), edtShopAddress.getText().toString()
                             , edtShopTel.getText().toString(), spinnerProvince.getSelectedItemPosition(),
                             spinnercity.getSelectedItemPosition(), spinnerArea.getSelectedItemPosition(), btnRegister, pbRegister, newShopDialog);
@@ -290,6 +294,8 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                     Toast.makeText(context, "لطفا فیلدها را پر نمایید", Toast.LENGTH_SHORT).show();
                 } else {
                     presenter.registerNewCategory(title, description, newCategoryDialog);
+
+                    Cache.setBoolean("chooseFamily",true);
                 }
 
 
@@ -353,6 +359,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                 int spnFamilyPosition = spnFamily.getSelectedItemPosition();
                 idSpnFamily = App.categoryList.data.get(spnFamilyPosition).getId();
                 App.idSpnFamily = idSpnFamily;
+                Cache.setString("idFamily",idSpnFamily);
                 strProductSpn = spnFamily.getSelectedItem().toString();
                 Cache.setString("strCategory",strProductSpn);
             }
@@ -367,6 +374,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 
             App.idSpnFamily = idSpnFamily;
             chooseFamily = true;
+            Cache.setBoolean("chooseFamily",true);
             checkVisibilityBtnRgsBarcode();
             //todo we can save it in sharePref too
 //             Cache.setString("idSpnFamily",idSpnFamily);
@@ -402,6 +410,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                 int spnShopPosition = spnShop.getSelectedItemPosition();
                 idSpnShop = App.shopList.data.get(spnShopPosition).getId();
                 App.idSpnShop = idSpnShop;
+                Cache.setString("idShop",idSpnShop);
                 strShopSpn = spnShop.getSelectedItem().toString();
                 Cache.setString("strShop",strShopSpn);
 
@@ -415,6 +424,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
         btRegisterChooseShop.setOnClickListener(v -> {
             App.idSpnShop = idSpnShop;
             chooseShop = true;
+            Cache.setBoolean("chooseShop",true);
             checkVisibilityBtnRgsBarcode();
             dialog.dismiss();
         });
@@ -422,19 +432,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
         dialog.show();
     }
 
-    private void checkVisibilityBtnRgsBarcode() {
-        if (chooseShop && chooseFamily) {
-            btnRegisterBarCode.setVisibility(View.VISIBLE);
-            llInfo.setVisibility(View.VISIBLE);
-//            txtChooseShop.setText("انتخاب فروشگاه :" + " " + strShopSpn);
-////            txtChooseProduct.setText("خانواده محصول :" + " " + strProductSpn);
-            txtChooseShop.setText("انتخاب فروشگاه :" + " " + Cache.getString("strShop"));
-            txtChooseProduct.setText("خانواده محصول :" + " " + Cache.getString("strCategory"));
-        } else {
-            btnRegisterBarCode.setVisibility(View.GONE);
-            llInfo.setVisibility(View.GONE);
-        }
-    }
+
 
     @Override
     public void hideBtnChooseShop() {
@@ -503,14 +501,13 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu_main; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -519,8 +516,8 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
             dialogFactory.createResetDialog(new DialogFactory.DialogFactoryInteraction() {
                 @Override
                 public void onAcceptButtonClicked(String... strings) {
-                    Cache.setString("email", "");
-                    Cache.setString("password", "");
+                    Cache.setString("email","");
+                    Cache.setString("password","");
                     startActivity(new Intent(MainActivity.this, SplashActivity.class));
                     (MainActivity.this).finish();
                 }
@@ -529,13 +526,30 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                 public void onDeniedButtonClicked(boolean cancel_dialog) {
 
                 }
-            }, rlRoot);
+            },rlRoot);
 
-//            return true;
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void checkVisibilityBtnRgsBarcode() {
+//        if (chooseShop && chooseFamily) {
+        if (Cache.getBoolean("chooseShop") && Cache.getBoolean("chooseFamily")) {
+            btnRegisterBarCode.setVisibility(View.VISIBLE);
+            llInfo.setVisibility(View.VISIBLE);
+            txtChooseShop.setText("انتخاب فروشگاه :" + " " + Cache.getString("strShop"));
+            txtChooseProduct.setText("خانواده محصول :" + " " + Cache.getString("strCategory"));
+        } else {
+            btnRegisterBarCode.setVisibility(View.GONE);
+            llInfo.setVisibility(View.GONE);
+        }
+    }
+
+
+
 
 
     @Override
@@ -556,6 +570,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 
         }else{
             btnRegisterBarCode.setVisibility(View.GONE);
+            llInfo.setVisibility(View.GONE);
         }
 
     }

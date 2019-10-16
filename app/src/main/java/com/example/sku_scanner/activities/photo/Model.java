@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.sku_scanner.activities.qrcode.ScanActivity;
 import com.example.sku_scanner.helpers.App;
+import com.example.sku_scanner.helpers.Cache;
 import com.example.sku_scanner.helpers.Toaster;
 import com.example.sku_scanner.models.login.LoginResult;
 import com.example.sku_scanner.models.scan.ScanSendData;
@@ -31,12 +32,16 @@ public class Model implements Contract.Model {
     @Override
     public void sendData(String strScanResult, String strBm1) {
 
+        String idShop = Cache.getString("idShop");
+        String idFamily = Cache.getString("idFamily");
 
         ScanSendData scanData = new ScanSendData();
         scanData.setBarcode(strScanResult);
         scanData.setImage(strBm1);
-        scanData.setShop_id(App.idSpnShop);
-        scanData.setCategory_id(App.idSpnFamily);
+        scanData.setShop_id(idShop);
+        scanData.setCategory_id(idFamily);
+//        scanData.setShop_id(App.idSpnShop);
+//        scanData.setCategory_id(App.idSpnFamily);
 
         Service service = new ServiceProvider(context).getmService();
         Call<Boolean> call = service.sendScanData(scanData);
