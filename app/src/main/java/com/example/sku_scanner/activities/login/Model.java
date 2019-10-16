@@ -97,8 +97,6 @@ public class Model implements Contract.Model {
 
             }
         });
-
-
     }
 
 
