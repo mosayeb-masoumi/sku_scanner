@@ -101,6 +101,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     Dialog newShopDialog, newCategoryDialog;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,6 +152,10 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
         btnRegisterBarCode.setOnClickListener(v -> {
             presenter.btnRegiserCodePressed();
         });
+
+
+
+
 
     }
 

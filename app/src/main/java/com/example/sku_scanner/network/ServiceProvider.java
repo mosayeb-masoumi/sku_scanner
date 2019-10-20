@@ -1,6 +1,11 @@
 package com.example.sku_scanner.network;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.widget.Toast;
 
 import com.example.sku_scanner.helpers.App;
 import com.example.sku_scanner.helpers.Cache;
@@ -35,33 +40,29 @@ public class ServiceProvider {
             clientBuilder.addInterceptor(chain -> {
                 Request request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer " + Cache.getString("email"))
+                        .addHeader("Accept", "application/json")
                         .build();
                 return chain.proceed(request);
             });
-
+        }else{
+            // for error handling in login request
+            clientBuilder.addInterceptor(chain -> {
+                Request request = chain.request().newBuilder()
+                        .addHeader("Accept", "application/json")
+                        .build();
+                return chain.proceed(request);
+            });
         }
 
 
+        //error handlong
         clientBuilder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 Response response = chain.proceed(request);
 
-                if(response.isSuccessful()){
-
-                    int x = 1;
-
-                }else{
-                    int x = 2;
-                }
-
-                int a = response.code();
-                if (response.code() == 500) {
-
-                    return response;
-                }
-
+//                int a = response.code();
                 return response;
             }
         }).build();
@@ -70,12 +71,12 @@ public class ServiceProvider {
 
 
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+//        Gson gson = new GsonBuilder()
+//                .setLenient()
+//                .create();
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(App.ServerURL).client(clientBuilder.build()).
-                addConverterFactory(GsonConverterFactory.create(gson)).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
+                addConverterFactory(GsonConverterFactory.create()).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
 
         mService = retrofit.create(Service.class);
     }

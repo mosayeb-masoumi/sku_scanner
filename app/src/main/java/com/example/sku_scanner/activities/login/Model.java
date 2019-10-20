@@ -1,11 +1,16 @@
 package com.example.sku_scanner.activities.login;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.sku_scanner.helpers.App;
 import com.example.sku_scanner.helpers.Cache;
 import com.example.sku_scanner.helpers.GpsTracker;
-import com.example.sku_scanner.helpers.Toaster;
+import com.example.sku_scanner.helpers.api_error.APIError;
+import com.example.sku_scanner.helpers.api_error.ErrorUtils;
 import com.example.sku_scanner.models.login.LoginResult;
 import com.example.sku_scanner.models.login.LoginSendData;
 import com.example.sku_scanner.network.Service;
@@ -13,7 +18,6 @@ import com.example.sku_scanner.network.ServiceProvider;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class Model implements Contract.Model {
@@ -59,39 +63,28 @@ public class Model implements Contract.Model {
                     App.loginResult = response.body();
                     presenter.saveEmailPassword(response.body().result.email ,response.body().result.password);
 
-                }else {
+                }else if(response.code()==422){
 
-                    if (response.code() == 403){
-                        Toaster.shorter("رمز صحیح نمی باشد");
-                        presenter.loginResult(-4);
-                    }else if(response.code()==422){
-                        Toaster.shorter("خطا در ارتباط با سرور");
-                        presenter.loginResult(-4);
-                    }else if (response.code()==500){
-
-                            String a = response.message();
-                            Toaster.shorter(a);
-
-//                        presenter.loginResult(-4);
+                    APIError apiError = ErrorUtils.parseError(response);
+                    StringBuilder builderTitle = new StringBuilder();
+                    for (String a : apiError.errors.email) {
+                        builderTitle.append("" + a + " ");
                     }
+
+                    StringBuilder builderPassword = new StringBuilder();
+                    for (String b : apiError.errors.password) {
+                        builderPassword.append("" + b + " ");
+                    }
+
+                    Toast.makeText(context, ""+builderTitle +"\n"+ builderPassword , Toast.LENGTH_LONG).show();
+                    presenter.loginResult(422);
+                } else  {
+                    presenter.loginResult(-4);
                 }
             }
 
             @Override
             public void onFailure(Call<LoginResult> call, Throwable t) {
-
-
-                if (t instanceof HttpException) {
-                    int code = ((HttpException) t).code();
-                    switch (code) {
-                        case 422:   Toaster.shorter("ایمیل و (یا) رمز عبور اشتباه است");   break;
-                    }
-                } else {
-                    String error1 = "Use JsonReader.setLenient(true) to accept malformed JSON at line 1 column 1 path $";
-                    if(t.getMessage().toString().equals(error1)){
-                        Toaster.shorter("ایمیل و (یا) رمز عبور اشتباه است");
-                    }
-                }
 
                 presenter.loginResult(-5);
 

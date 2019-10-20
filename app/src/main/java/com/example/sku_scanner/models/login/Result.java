@@ -11,6 +11,9 @@ public class Result {
     public String password;
     @SerializedName("api_key")
     public String apiKey;
+    @SerializedName("version_code")
+    public String version_code;
+
 
     public String getName() {
         return name;
@@ -42,5 +45,13 @@ public class Result {
 
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    public String getVersion_code() {
+        return version_code;
+    }
+
+    public void setVersion_code(String version_code) {
+        this.version_code = version_code;
     }
 }

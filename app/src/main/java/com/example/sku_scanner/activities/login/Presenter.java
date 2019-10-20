@@ -48,7 +48,7 @@ public class Presenter implements Contract.Presenter {
         }else if(result== -4){
             Toast.makeText(context, R.string.serverFaield, Toast.LENGTH_SHORT).show();
         }else if(result == -5){
-//            Toast.makeText(context, R.string.connectionFaield, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.connectionFaield, Toast.LENGTH_SHORT).show();
         }
 
 

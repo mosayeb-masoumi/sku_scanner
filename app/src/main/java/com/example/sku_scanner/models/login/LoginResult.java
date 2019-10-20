@@ -1,15 +1,17 @@
 package com.example.sku_scanner.models.login;
 
-import com.example.sku_scanner.helpers.api_error.APIError;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResult {
     @SerializedName("result")
     public Result result;
 
-//    @SerializedName("apiError")
-////    public APIError apiError;
+    public Result getResult() {
+        return result;
+    }
 
-//    @SerializedName("message")
-//    public String message;
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
 }

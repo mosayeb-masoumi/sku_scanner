@@ -73,9 +73,6 @@ public class LoginActivity extends PersianAppcompatActivity implements Contract.
 
         };
 
-//        //todo test
-//        etEmail.setText("user2@sku.com");
-//        etPassword.setText("123456789");
 
 
         btLogin.setOnClickListener(v -> {
