@@ -158,7 +158,7 @@ public class Presenter implements Contract.Presenter {
 
     @Override
     public void updateApp() {
-
+       String update= "update";
     }
 
 //    @Override
