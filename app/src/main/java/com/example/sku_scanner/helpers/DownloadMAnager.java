@@ -31,8 +31,7 @@ public class DownloadMAnager {
         android.app.DownloadManager.Request request =
 // main               new android.app.DownloadManager.Request(Uri.parse(context.getResources().getString(R.string.app_url)));
 
-//                new android.app.DownloadManager.Request(Uri.parse(App.userInfo.getDownloadLinkApp()));
-                new android.app.DownloadManager.Request(Uri.parse(""));
+                new android.app.DownloadManager.Request(Uri.parse(App.loginResult.result.getApk_url()));
 
 
 

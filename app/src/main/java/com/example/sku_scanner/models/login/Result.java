@@ -13,6 +13,8 @@ public class Result {
     public String apiKey;
     @SerializedName("version_code")
     public String version_code;
+    @SerializedName("apk_url")
+    public String apk_url;
 
 
     public String getName() {
@@ -53,5 +55,13 @@ public class Result {
 
     public void setVersion_code(String version_code) {
         this.version_code = version_code;
+    }
+
+    public String getApk_url() {
+        return apk_url;
+    }
+
+    public void setApk_url(String apk_url) {
+        this.apk_url = apk_url;
     }
 }
