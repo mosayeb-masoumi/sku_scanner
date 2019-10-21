@@ -156,6 +156,9 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 
 
 
+        presenter.checkUpdate();
+
+
 
     }
 
@@ -272,6 +275,28 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 //        strProductSpn = title;
         Cache.setString("strCategory",title);
         checkVisibilityBtnRgsBarcode();
+    }
+
+    @Override
+    public void showUpdateDialog() {
+
+        dialogFactory.createUpdateDialog(new DialogFactory.DialogFactoryInteraction() {
+            @Override
+            public void onAcceptButtonClicked(String... strings) {
+
+                if(presenter.storagePermissionGranted()){
+                    presenter.updateApp();
+                }else{
+                    presenter.requestStoragePermission();
+                }
+
+            }
+
+            @Override
+            public void onDeniedButtonClicked(boolean cancel_dialog) {
+               exitApp();
+            }
+        },rlRoot);
     }
 
 
@@ -495,6 +520,11 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                 } else {
                     Toast.makeText(this, "نیاز به اجازه ی دسترسی دوربین", Toast.LENGTH_SHORT).show();
                 }
+                break;
+
+            case 555:
+                presenter.updateApp();
+                break;
 
         }
 

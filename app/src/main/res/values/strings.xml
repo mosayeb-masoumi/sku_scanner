@@ -25,4 +25,6 @@
     <string name="action_reset">خروج</string>
     <string name="sure_to_reset">آیا مطمین هستید که می خواهید از برنامه خارج شوید؟</string>
     <string name="cancel">انصراف</string>
+    <string name="update_available">بروزرسانی نسخه جدید موجود می باشد</string>
+    <string name="update">بروز رسانی</string>
 </resources>

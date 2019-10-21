@@ -19,7 +19,7 @@ public interface Contract {
         boolean checkGpsON();
 
 
-
+        void loginResult(int result);
     }
 
     interface Model{

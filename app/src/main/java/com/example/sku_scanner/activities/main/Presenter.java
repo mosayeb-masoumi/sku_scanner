@@ -1,19 +1,23 @@
 package com.example.sku_scanner.activities.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.sku_scanner.BuildConfig;
 import com.example.sku_scanner.R;
 import com.example.sku_scanner.activities.new_shop.NewShopActivity;
 import com.example.sku_scanner.activities.qrcode.ScanActivity;
+import com.example.sku_scanner.helpers.App;
 import com.example.sku_scanner.models.city.CityList;
 import com.example.sku_scanner.models.province.ProvinceList;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -124,6 +128,37 @@ public class Presenter implements Contract.Presenter {
     public void showBtnRegisterNewShop(Button btnRegister, ProgressBar pbRegister, Dialog newShopDialog, String edtShopName) {
         Toast.makeText(context, "فروشگاه جدید با موفقیت ثبت شد", Toast.LENGTH_SHORT).show();
         view.showBtnRegisterNewShop(btnRegister,pbRegister,true,newShopDialog,edtShopName);
+    }
+
+    @Override
+    public void checkUpdate() {
+
+        String current_version = String.valueOf(BuildConfig.VERSION_CODE);
+
+        if(!current_version.equals(App.loginResult.result.version_code)){
+            view.showUpdateDialog();
+        }
+
+    }
+
+    @Override
+    public boolean storagePermissionGranted() {
+
+        if(ContextCompat.checkSelfPermission(App.context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+              return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void requestStoragePermission() {
+        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 555);
+    }
+
+    @Override
+    public void updateApp() {
+
     }
 
 //    @Override

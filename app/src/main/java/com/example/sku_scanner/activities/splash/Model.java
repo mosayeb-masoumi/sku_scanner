@@ -10,6 +10,8 @@ import com.example.sku_scanner.helpers.App;
 import com.example.sku_scanner.helpers.Cache;
 import com.example.sku_scanner.helpers.GpsTracker;
 import com.example.sku_scanner.helpers.Toaster;
+import com.example.sku_scanner.helpers.api_error.APIError;
+import com.example.sku_scanner.helpers.api_error.ErrorUtils;
 import com.example.sku_scanner.models.login.LoginResult;
 import com.example.sku_scanner.models.login.LoginSendData;
 import com.example.sku_scanner.network.ServiceProvider;
@@ -51,18 +53,12 @@ public class Model implements Contract.Model {
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
 
                 if (response.code() == 200) {
-//                    presenter.loginResult(1);
+                    presenter.loginResult(1);
                     App.loginResult = response.body();
-                    context.startActivity(new Intent(context, MainActivity.class));
-//                    presenter.saveEmailPassword(response.body().result.email ,response.body().result.password);
+//                    context.startActivity(new Intent(context, MainActivity.class));
 
-                } else {
-
-                    if (response.code() == 403) {
-                        Toaster.shorter("رمز صحیح نمی باشد");
-                    } else {
-                        Toaster.shorter("خطا در ارتباط با سرور");
-                    }
+                }else{
+                    presenter.loginResult(-4);
                 }
             }
 
@@ -72,11 +68,9 @@ public class Model implements Contract.Model {
                 String error1 = "java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1 path $";
                 if (t.getMessage().toString().equals(error1))
                     Toaster.shorter("The selected email is invalid.");
-//                presenter.loginResult(-5);
+                presenter.loginResult(-5);
             }
         });
-
-
     }
 
     public void getLocation() {

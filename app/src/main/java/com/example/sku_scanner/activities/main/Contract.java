@@ -39,6 +39,8 @@ public interface Contract {
         void showBtnRegisterNewShop(Button btnRegister, ProgressBar pbRegister, boolean b, Dialog newShopDialog, String edtShopName);
 
         void newFamilyRegistered(Dialog newCategoryDialog, String title);
+
+        void showUpdateDialog();
     }
 
     interface Presenter {
@@ -81,6 +83,14 @@ public interface Contract {
         void registerNewShopResult(int result, Button btnRegister, ProgressBar pbRegister, Dialog newShopDialog, String edtShopName);
 
         void showBtnRegisterNewShop(Button btnRegister, ProgressBar pbRegister, Dialog newShopDialog, String edtShopName);
+
+        void checkUpdate();
+
+        boolean storagePermissionGranted();
+
+        void requestStoragePermission();
+
+        void updateApp();
     }
 
     interface Model{

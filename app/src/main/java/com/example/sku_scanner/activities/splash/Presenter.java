@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.LocationManager;
+import android.widget.Toast;
 
+import com.example.sku_scanner.R;
 import com.example.sku_scanner.activities.login.LoginActivity;
+import com.example.sku_scanner.activities.main.MainActivity;
 import com.example.sku_scanner.helpers.Cache;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -91,7 +94,17 @@ public class Presenter implements Contract.Presenter {
         return true;
     }
 
-
+    @Override
+    public void loginResult(int result) {
+//        view.showBtn();
+        if(result == 1 ){
+            context.startActivity(new Intent(context, MainActivity.class));
+        }else if(result== -4){
+            Toast.makeText(context, R.string.serverFaield, Toast.LENGTH_SHORT).show();
+        }else if(result == -5){
+            Toast.makeText(context, R.string.connectionFaield, Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     private void gotoLogin() {
