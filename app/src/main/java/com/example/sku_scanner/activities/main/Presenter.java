@@ -18,6 +18,7 @@ import com.example.sku_scanner.R;
 import com.example.sku_scanner.activities.new_shop.NewShopActivity;
 import com.example.sku_scanner.activities.qrcode.ScanActivity;
 import com.example.sku_scanner.helpers.App;
+import com.example.sku_scanner.helpers.DownloadMAnager;
 import com.example.sku_scanner.models.city.CityList;
 import com.example.sku_scanner.models.province.ProvinceList;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -158,7 +159,7 @@ public class Presenter implements Contract.Presenter {
 
     @Override
     public void updateApp() {
-       String update= "update";
+       new DownloadMAnager().DownloadUpdateApp(context);
     }
 
 //    @Override
