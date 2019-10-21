@@ -41,6 +41,10 @@ public interface Contract {
         void newFamilyRegistered(Dialog newCategoryDialog, String title);
 
         void showUpdateDialog();
+
+        void hideBtnNewShop();
+
+        void showBtnNewShop();
     }
 
     interface Presenter {
@@ -112,5 +116,6 @@ public interface Contract {
         void requestDataSpnCity(Spinner spinnercity, int positionProvince, ProvinceList provincelist, AVLoadingIndicatorView avi);
 
         void btNewShopClicked(String edtShopName, String edtShopAddress, String edtShopTel, int spinnerProvincePosition, int spinnercityPosition, int spinnerAreaPosition, Button btnRegister, ProgressBar pbRegister, Dialog newShopDialog);
+
     }
 }

@@ -1,6 +1,5 @@
 package com.example.sku_scanner.activities.photo;
 
-import android.arch.persistence.room.Room;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,27 +17,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sku_scanner.DataBase.AppDatabase;
-import com.example.sku_scanner.DataBase.ModelDB;
 import com.example.sku_scanner.R;
 import com.example.sku_scanner.activities.main.MainActivity;
-import com.example.sku_scanner.activities.qrcode.ScanActivity;
-import com.example.sku_scanner.helpers.App;
 import com.example.sku_scanner.helpers.Converter;
 import com.example.sku_scanner.helpers.GeneralTools;
+import com.example.sku_scanner.helpers.PersianAppcompatActivity;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.enums.EPickType;
 import com.vansuita.pickimage.listeners.IPickResult;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PhotoActivity extends AppCompatActivity implements Contract.View, IPickResult {
+public class PhotoActivity extends PersianAppcompatActivity implements Contract.View, IPickResult {
 
     Contract.Presenter presenter = new Presenter();
     Context context;
@@ -68,6 +60,8 @@ public class PhotoActivity extends AppCompatActivity implements Contract.View, I
     String strBm1 = "";
     BroadcastReceiver connectivityReceiver = null;
     String strScanResult = "";
+    @BindView(R.id.img_back)
+    ImageView imgBack;
 //    @BindView(R.id.btnAdd)
 //    Button btnAdd;
 
@@ -102,6 +96,12 @@ public class PhotoActivity extends AppCompatActivity implements Contract.View, I
             img1.setImageDrawable(null);
         });
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.imgBackPressed();
+            }
+        });
 
 //        //db
 //        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "detaildb")
@@ -110,10 +110,10 @@ public class PhotoActivity extends AppCompatActivity implements Contract.View, I
 
 
         btnSendPhoto.setOnClickListener(v -> {
-            if(strBm1.equals("") || strBm1 == null){
+            if (strBm1.equals("") || strBm1 == null) {
                 Toast.makeText(context, "لطفا عکس بگیرید", Toast.LENGTH_SHORT).show();
-            }else {
-                presenter.sendData(strScanResult,strBm1);
+            } else {
+                presenter.sendData(strScanResult, strBm1);
             }
 
 //                List<ModelDB> modelDBarray = new ArrayList<>();

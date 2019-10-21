@@ -89,16 +89,41 @@
             android:layout_margin="@dimen/_5sdp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_newShop"
+
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button"
-                android:text="فروشگاه جدید"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp" />
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_newShop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:background="@drawable/bg_button"
+                    android:text="فروشگاه جدید"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <ProgressBar
+                    android:id="@+id/pb_newShop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_button"
+                    android:indeterminateTint="@color/colorAccent"
+                    android:theme="@style/ProgressBar"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+
+
+
+
+
+
+
+
 
             <RelativeLayout
                 android:layout_width="0dp"

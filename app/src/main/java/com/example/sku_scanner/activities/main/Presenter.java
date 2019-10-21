@@ -70,6 +70,7 @@ public class Presenter implements Contract.Presenter {
 
     @Override
     public void requestProvinceData() {
+        view.hideBtnNewShop();
         model.requestProvinceData();
     }
 
@@ -87,7 +88,11 @@ public class Presenter implements Contract.Presenter {
     @Override
     public void resultGetProvinceList(int result) {
 
-        if (result == -4) {
+        if (result==1){
+
+            view.showBtnNewShop();
+
+        }else if (result == -4) {
             Toast.makeText(context, R.string.serverFaield, Toast.LENGTH_SHORT).show();
         } else if (result == -5) {
             Toast.makeText(context, R.string.connectionFaield, Toast.LENGTH_SHORT).show();

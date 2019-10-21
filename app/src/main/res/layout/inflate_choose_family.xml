@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/bg_dialog"
     android:layout_height="@dimen/_400sdp">
 
 
@@ -12,7 +13,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         android:gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/bg_button"
         android:layout_height="@dimen/_48sdp"
         />
 

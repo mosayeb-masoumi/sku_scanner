@@ -18,6 +18,8 @@ public interface Contract {
         void sendData(String strScanResult, String strBm1);
 
         void sendDataResult(int result);
+
+        void imgBackPressed();
     }
 
     interface Model{
