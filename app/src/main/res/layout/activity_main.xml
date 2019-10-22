@@ -93,13 +93,13 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_weight="1">
 
                 <Button
                     android:id="@+id/btn_newShop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/_5sdp"
                     android:background="@drawable/bg_button"
                     android:text="فروشگاه جدید"
                     android:textColor="@color/white"

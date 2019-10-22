@@ -48,6 +48,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 public class MainActivity extends PersianAppcompatActivity implements Contract.View {
     Contract.Presenter presenter = new Presenter();
     Context context;
@@ -55,6 +56,8 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     boolean doubleBackToExitPressedOnce = false;
     BroadcastReceiver connectivityReceiver = null;
 
+
+    private static final String SHOWCASE_ID = "sequence example";
 
     @BindView(R.id.txtToolbarMain)
     TextView txtToolbarMain;
@@ -103,7 +106,6 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     Dialog newShopDialog, newCategoryDialog;
     @BindView(R.id.pb_newShop)
     ProgressBar pbNewShop;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,8 +161,8 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 
         presenter.checkUpdate();
 
-
     }
+
 
 
     @Override
@@ -454,7 +456,6 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
         }
 
 
-
         if (dialog.getWindow() != null) {
 
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -464,11 +465,6 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
         Spinner spnShop = dialog.findViewById(R.id.spinnerChooseShop);
         Button btRegisterChooseShop = dialog.findViewById(R.id.btRegisterChooseShop);
         ProgressBar pbShop = dialog.findViewById(R.id.pbRegisterChooseShop);
-
-
-
-
-
 
 
         ArrayAdapter<String> spnChooseShopAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listSpnChooseShop);
@@ -578,6 +574,7 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -592,6 +589,12 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
                 public void onAcceptButtonClicked(String... strings) {
                     Cache.setString("email", "");
                     Cache.setString("password", "");
+
+                    Cache.setString("idShop", "");
+                    Cache.setString("idFamily", "");
+                    Cache.setString("strShop", "");
+                    Cache.setString("strCategory", "");
+
                     startActivity(new Intent(MainActivity.this, SplashActivity.class));
                     (MainActivity.this).finish();
                 }
@@ -610,8 +613,11 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
 
 
     private void checkVisibilityBtnRgsBarcode() {
-//        if (chooseShop && chooseFamily) {
-        if (Cache.getBoolean("chooseShop") && Cache.getBoolean("chooseFamily")) {
+
+        String strShop = Cache.getString("strShop");
+        String strCategory = Cache.getString("strCategory");
+        if (!strShop.equals("") && !strCategory.equals("")) {
+//        if (Cache.getBoolean("chooseShop") && Cache.getBoolean("chooseFamily")) {
             btnRegisterBarCode.setVisibility(View.VISIBLE);
             llInfo.setVisibility(View.VISIBLE);
             txtChooseShop.setText("انتخاب فروشگاه :" + " " + Cache.getString("strShop"));
@@ -627,7 +633,6 @@ public class MainActivity extends PersianAppcompatActivity implements Contract.V
     protected void onResume() {
         super.onResume();
         registerReceiver(connectivityReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-//        if(!strShopSpn.equals("") && !strProductSpn.equals("")){
 
         String strShop = Cache.getString("strShop");
         String strCategory = Cache.getString("strCategory");

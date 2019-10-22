@@ -109,7 +109,7 @@
         <RelativeLayout
             android:id="@+id/rlButtons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_alignParentStart="true"
             android:layout_marginTop="@dimen/_25sdp">
@@ -117,11 +117,10 @@
             <Button
                 android:id="@+id/btLogin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/bg_button"
-                android:foreground="?selectableItemBackground"
                 android:text="@string/enter"
                 android:textColor="#fff"
                 android:textSize="@dimen/_15ssp"
@@ -130,7 +129,7 @@
             <ProgressBar
                 android:id="@+id/pbLogin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:background="@drawable/bg_button"

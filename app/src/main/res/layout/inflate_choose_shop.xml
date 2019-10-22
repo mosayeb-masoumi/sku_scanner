@@ -65,7 +65,7 @@
     <RelativeLayout
         android:id="@+id/rlButtons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_10sdp"
@@ -75,8 +75,7 @@
         <Button
             android:id="@+id/btRegisterChooseShop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_height="match_parent"
             android:background="@drawable/bg_button"
             android:foreground="?selectableItemBackground"
             android:text="ثبت"
@@ -87,9 +86,8 @@
         <ProgressBar
             android:id="@+id/pbRegisterChooseShop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:background="@drawable/bg_button"
             android:indeterminateTint="#fff"

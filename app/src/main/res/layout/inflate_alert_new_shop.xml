@@ -35,7 +35,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scroll"
         android:layout_below="@+id/txt13">
 
 
@@ -286,30 +287,33 @@
         style="@style/AVLoadingIndicatorView.Large"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_above="@+id/rlButtons"
+        android:layout_below="@+id/scroll"
+        android:layout_marginTop="@dimen/_2sdp"
         android:visibility="visible"
-        android:layout_marginBottom="@dimen/_20sdp"
         android:layout_centerHorizontal="true"
         app:indicatorColor="@color/colorAccent"
         app:indicatorName="BallSpinFadeLoaderIndicator" />
 
 
 
+
+
+
+
     <RelativeLayout
         android:id="@+id/rlButtons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_15sdp">
+        android:layout_marginBottom="@dimen/_30sdp">
 
         <Button
             android:id="@+id/btRegister_newShop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/bg_button"
-            android:foreground="?selectableItemBackground"
             android:text="ثبت"
             android:layout_marginBottom="@dimen/_5sdp"
             android:textColor="#fff"
@@ -319,9 +323,8 @@
         <ProgressBar
             android:id="@+id/pbRegister__newShop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_height="match_parent"
             android:background="@drawable/bg_button"
             android:indeterminateTint="@color/colorAccent"
             android:visibility="gone" />
