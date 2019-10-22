@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.sku_scanner.R;
+import com.example.sku_scanner.helpers.Cache;
 import com.example.sku_scanner.helpers.GeneralTools;
 import com.example.sku_scanner.helpers.PersianAppcompatActivity;
 
@@ -37,6 +38,15 @@ public class SplashActivity extends PersianAppcompatActivity implements Contract
             }
 
         };
+
+
+
+        // to not show button register code in main activity
+        Cache.setString("idShop", "");
+        Cache.setString("idFamily", "");
+        Cache.setString("strShop", "");
+        Cache.setString("strCategory", "");
+
 
         presenter.activityLoaded();
     }
